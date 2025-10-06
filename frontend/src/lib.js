@@ -1,0 +1,1 @@
+export const API = import.meta.env.VITE_API || 'http://localhost:4000'; export function authHeader(){ const t = localStorage.getItem('mf_token'); return t?{ 'Authorization':'Bearer '+t }:{} }

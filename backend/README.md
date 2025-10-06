@@ -1,0 +1,1 @@
+Backend for Mutual Fund Tracker (enhanced)\n\nSetup:\n1. Copy .env.example -> .env and set values (MONGO_URI, JWT_SECRET).\n2. npm install\n3. npm run dev\n

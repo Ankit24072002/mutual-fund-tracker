@@ -1,0 +1,1 @@
+import React from 'react'; export default function FundCard({item,onOpen}){ return (<div className='p-3 bg-white rounded shadow-sm hover:shadow-md cursor-pointer' onClick={()=>onOpen(item.schemeCode)}><div className='font-semibold'>{item.schemeName}</div><div className='text-sm text-slate-600'>Code: {item.schemeCode}</div></div>); }
