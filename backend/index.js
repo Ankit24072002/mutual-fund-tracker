@@ -9,21 +9,32 @@ const axios = require('axios');
 const NodeCache = require('node-cache');
 
 const app = express();
-app.use(cors());
+
+// ✅ Allow requests only from your FRONTEND Render URL
+app.use(cors({
+  origin: ["https://mutual-fund-tracker-zmio.onrender.com"], // <-- frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(helmet());
 app.use(express.json());
 
+// ✅ Config
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/mf_tracker';
 const JWT_SECRET = process.env.JWT_SECRET || 'secretkey';
 const CACHE_TTL = Number(process.env.CACHE_TTL_SECONDS || 3600);
 
+// ✅ Cache
 const cache = new NodeCache({ stdTTL: CACHE_TTL, checkperiod: 120 });
 
+// ✅ MongoDB connection
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('✅ MongoDB connected successfully'))
   .catch((err) => console.error('❌ MongoDB connection failed:', err));
 
+// ✅ User Schema
 const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
@@ -33,6 +44,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+// ✅ Auth middleware
 function authMiddleware(req, res, next) {
   const auth = req.headers.authorization;
   if (!auth) return res.status(401).json({ error: 'Missing auth header' });
@@ -47,6 +59,7 @@ function authMiddleware(req, res, next) {
   }
 }
 
+// ✅ Helper: Fetch Mutual Fund API with caching
 async function fetchMfApi(path) {
   const base = 'https://api.mfapi.in';
   const url = base + path;
@@ -58,6 +71,7 @@ async function fetchMfApi(path) {
   return res.data;
 }
 
+// ✅ Routes
 app.get('/', (req, res) => res.send('Server running'));
 
 app.post('/api/auth/register', async (req, res) => {
@@ -79,6 +93,7 @@ app.post('/api/auth/register', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -182,4 +197,4 @@ app.post('/api/mf/compare', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
