@@ -12,10 +12,11 @@ const app = express();
 
 // ✅ Allow requests only from your FRONTEND Render URL
 app.use(cors({
-  origin: ["https://mutual-fund-tracker-zmio.onrender.com"], // <-- frontend URL
+  origin: ["https://mutual-fund-tracker-2-iqzm.onrender.com"], // ✅ FRONTEND URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
 
 app.use(helmet());
 app.use(express.json());
