@@ -46,7 +46,7 @@ This is a full-stack web application that allows users to register, log in, sear
 
 1. **Clone the repository**
 ```bash
-git clone <repository-url>
+git clone <https://github.com/Ankit24072002/mutual-fund-tracker.git>
 
 
 ****Backend Setup
@@ -67,7 +67,7 @@ npm run dev
 
 Configure .env with backend API URL if needed.
 
-Open the application in your browser at http://localhost:5173.
+Open the application in your browser at http://localhost:5173. or Live Link : https://mutual-fund-tracker-2-iqzm.onrender.com
 
 API Endpoints
 Authentication
